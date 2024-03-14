@@ -102,6 +102,42 @@ class Node {
             if(node.right) queue.enqueue(node.right)
         }
     }
+    
+    __removeNode(node, parent, newNode) {
+        if(parent.left && parent.left == node) {
+            parent.left = newNode
+        } else {
+            parent.right = newNode
+        }
+    }
+    
+    delete(value, parent = null) {
+        if(value == this.data) {
+            if(this.left && this.right) {
+                
+            } else if (!this.left) {
+                this.__removeNode(this, parent, this.right);
+            } else if (!this.right) {
+                this.__removeNode(this, parent, this.left);
+            } else {
+                this.__removeNode(this, parent, null);
+            }
+            
+            return true;
+        } else if(value < this.data) {
+            if(!this.left) {
+                return false;
+            } else {
+                return this.left.delete(value, this);
+            }
+        } else {
+            if(!this.right) {
+                return false;
+            } else {
+                return this.right.delete(value, this);
+            }
+        }
+    }
 }
 
 /*const queue = new Queue();
@@ -115,16 +151,20 @@ console.log(queue.isEmpty());
 queue.enqueue(12);*/
 
 const bts = new Node(11);
+console.log('--- INSERT ---');
 bts.insert(8);
 bts.insert(5);
+bts.insert(2);
 bts.insert(10);
 bts.insert(16);
 bts.insert(18);
+console.log('--- FIND ---');
 console.log(bts.contains(16))
 console.log(bts.contains(5))
 console.log(bts.contains(160))
 console.log(bts.contains(10))
 console.log(bts.contains(2))
+console.log('--- TRAVERSE ---');
 console.log('### DFS ###');
 console.log('PreOrder');
 bts.dfsPreOrder();
@@ -134,3 +174,22 @@ console.log('PostOrder');
 bts.dfsPostOrder()
 console.log('### BFS ###');
 bts.bfs();
+console.log('--- DELETE ---');
+console.log('Remove 5')
+bts.delete(5);
+bts.bfs();
+console.log('Remove 16')
+bts.delete(16);
+bts.bfs();
+console.log('Remove 2')
+bts.delete(2);
+bts.bfs();
+console.log('Remove 10')
+bts.delete(10);
+bts.bfs();
+
+
+
+
+
+
