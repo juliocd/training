@@ -42,28 +42,22 @@ class Node {
         }
     }
     
-    preOrder() {
+    dfsPreOrder() {
         console.log(this.data);
-        if(this.left) this.left.preOrder();
-        if(this.right) this.right.preOrder();
+        if(this.left) this.left.dfsPreOrder();
+        if(this.right) this.right.dfsPreOrder();
     }
     
-    inOrder() {
-        if(this.left) this.left.inOrder();
+    dfsInOrder() {
+        if(this.left) this.left.dfsInOrder();
         console.log(this.data);
-        if(this.right) this.right.inOrder();
+        if(this.right) this.right.dfsInOrder();
     }
     
-    postOrder() {
-        if(this.left) this.left.postOrder();
-        if(this.right) this.right.postOrder();
+    dfsPostOrder() {
+        if(this.left) this.left.dfsPostOrder();
+        if(this.right) this.right.dfsPostOrder();
         console.log(this.data);
-    }
-    
-    dfsTraverse() {
-        console.log(this.data);
-        if(this.left) this.left.dfsTraverse();
-        if(this.right) this.right.dfsTraverse();
     }
 }
 
@@ -79,8 +73,8 @@ console.log(bts.contains(160))
 console.log(bts.contains(10))
 console.log(bts.contains(2))
 console.log('PreOrder');
-bts.preOrder();
+bts.dfsPreOrder();
 console.log('InOrder');
-bts.inOrder()
+bts.dfsInOrder()
 console.log('PostOrder');
-bts.postOrder()
+bts.dfsPostOrder()
