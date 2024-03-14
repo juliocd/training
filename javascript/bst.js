@@ -103,7 +103,7 @@ class Node {
         }
     }
     
-    __removeNode(node, parent, newNode) {
+    __replaceNode(node, parent, newNode) {
         if(parent.left && parent.left == node) {
             parent.left = newNode
         } else {
@@ -115,12 +115,42 @@ class Node {
         if(value == this.data) {
             if(this.left && this.right) {
                 
+                // Get min node from right node
+                let minNode = this.right;
+                let minNodeParent = this;
+                while(minNode.left) {
+                    minNodeParent = minNode;
+                    minNode = minNode.left;
+                }
+                
+                this.__replaceNode(minNode, minNodeParent, null);
+                
+                minNode.left = this.left;
+                // Get max value from the new parent
+                if(minNode.right) {
+                    let maxNodeFromMin = minNode.right;
+                    while(maxNodeFromMin.right) {
+                        maxNodeFromMin = maxNodeFromMin.right;
+                    }
+                    maxNodeFromMin.right = this.right;
+                } else {
+                    minNode.right = this.right;
+                }
+                
+                if(parent == null) {
+                    this.data = minNode.data;
+                    this.left = minNode.left;
+                    this.right = minNode.right;
+                    minNode = null;
+                } else {
+                    this.__replaceNode(this, parent, minNode);
+                }
             } else if (!this.left) {
-                this.__removeNode(this, parent, this.right);
+                this.__replaceNode(this, parent, this.right);
             } else if (!this.right) {
-                this.__removeNode(this, parent, this.left);
+                this.__replaceNode(this, parent, this.left);
             } else {
-                this.__removeNode(this, parent, null);
+                this.__replaceNode(this, parent, null);
             }
             
             return true;
@@ -157,7 +187,12 @@ bts.insert(5);
 bts.insert(2);
 bts.insert(10);
 bts.insert(16);
+bts.insert(13);
+bts.insert(14);
+bts.insert(15);
 bts.insert(18);
+bts.insert(17);
+bts.insert(22);
 console.log('--- FIND ---');
 console.log(bts.contains(16))
 console.log(bts.contains(5))
@@ -175,17 +210,20 @@ bts.dfsPostOrder()
 console.log('### BFS ###');
 bts.bfs();
 console.log('--- DELETE ---');
-console.log('Remove 5')
+/*console.log('Remove 5')
 bts.delete(5);
 bts.bfs();
+console.log('Remove 18')
+bts.delete(18);
+bts.bfs();
+console.log('Remove 8')
+bts.delete(8);
+bts.bfs();
+console.log('Remove Root')
+bts.delete(11);
+bts.bfs();*/
 console.log('Remove 16')
 bts.delete(16);
-bts.bfs();
-console.log('Remove 2')
-bts.delete(2);
-bts.bfs();
-console.log('Remove 10')
-bts.delete(10);
 bts.bfs();
 
 
